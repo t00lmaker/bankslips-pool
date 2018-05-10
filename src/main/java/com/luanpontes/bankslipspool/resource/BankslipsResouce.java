@@ -6,7 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import static org.springframework.http.HttpStatus.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luanpontes.bankslipspool.exception.ResourceNotFoundException;
 import com.luanpontes.bankslipspool.model.Bankslip;
 import com.luanpontes.bankslipspool.repository.BankslipsRepository;
 
@@ -28,42 +29,41 @@ public class BankslipsResouce {
 	@PostMapping("/bankslips")
 	public ResponseEntity<Bankslip> create(@Valid @RequestBody(required=true) Bankslip bankslip) {
 		Bankslip newBanklip = bankslipRep.save(bankslip);
-		return new ResponseEntity<Bankslip>(newBanklip, HttpStatus.CREATED);
+		return new ResponseEntity<Bankslip>(newBanklip, CREATED);
 	}
 
 
 	@GetMapping("/bankslips")
 	public ResponseEntity<List<Bankslip>> all(){
-		return new ResponseEntity<List<Bankslip>>((List<Bankslip>) bankslipRep.findAll(), HttpStatus.OK);
+		return new ResponseEntity<List<Bankslip>>((List<Bankslip>) bankslipRep.findAll(), OK);
 	}
 
 	@GetMapping("/bankslips/{id}")
 	public ResponseEntity<Bankslip> get(@PathVariable long id) {
 		Optional<Bankslip> bankslipOp = bankslipRep.findById(id);
 		if(!bankslipOp.isPresent())
-			return new ResponseEntity<Bankslip>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(id, "Bankslip");
 		
-		return new ResponseEntity<Bankslip>(bankslipOp.get(), HttpStatus.OK);
+		return new ResponseEntity<Bankslip>(bankslipOp.get(), OK);
 	}
 
 	@DeleteMapping("/bankslips/{id}/cancel")
 	public ResponseEntity<Bankslip> delete(@PathVariable Long id) {
 		Optional<Bankslip> optional = bankslipRep.findById(id);
 		if(!optional.isPresent())
-			return new ResponseEntity<Bankslip>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(id, "Bankslip");
 		
-		bankslipRep.delete(optional.get());
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(NO_CONTENT);
 	}
 
-	@PutMapping("/bankslips/{id}")
+	@PutMapping("/bankslips/{id}/pay")
 	public ResponseEntity<Bankslip> update(@RequestBody Bankslip bankslip, @PathVariable Long id) {
 		Optional<Bankslip> bankslipOp = bankslipRep.findById(id);
 		if(!bankslipOp.isPresent())
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(id, "Bankslip");
 		
 		bankslip.setId(id);
 		bankslipRep.save(bankslip);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(NO_CONTENT);
 	}
 }
