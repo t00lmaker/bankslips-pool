@@ -3,6 +3,8 @@ package com.luanpontes.bankslipspool.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +34,8 @@ public class Bankslip implements Serializable{
 	private String customer;
 	
 	@NotNull
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private StatusBankslip status;
 	
 	@Transient
 	private Integer fine;
@@ -61,11 +64,11 @@ public class Bankslip implements Serializable{
 		this.customer = custumer;
 	}
 
-	public String getStatus() {
+	public StatusBankslip getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusBankslip status) {
 		this.status = status;
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.luanpontes.bankslipspool.exception.ResourceNotFoundException;
 import com.luanpontes.bankslipspool.model.Bankslip;
+import com.luanpontes.bankslipspool.model.StatusBankslip;
 import com.luanpontes.bankslipspool.repository.BankslipsRepository;
 
 @RestController
@@ -53,14 +54,26 @@ public class BankslipsResouce {
 		if(!optional.isPresent())
 			throw new ResourceNotFoundException(id, "Bankslip");
 		
+		Bankslip bankslip = optional.get();
+		if(bankslip.getStatus().isValid(StatusBankslip.CANCELED)) {
+			bankslip.setStatus(StatusBankslip.CANCELED);
+			bankslipRep.save(bankslip);
+		}
+		
 		return new ResponseEntity<>(NO_CONTENT);
 	}
 
 	@PutMapping("/bankslips/{id}/pay")
-	public ResponseEntity<Bankslip> update(@RequestBody Bankslip bankslip, @PathVariable Long id) {
-		Optional<Bankslip> bankslipOp = bankslipRep.findById(id);
-		if(!bankslipOp.isPresent())
+	public ResponseEntity<Bankslip> update(@PathVariable Long id) {
+		Optional<Bankslip> optional = bankslipRep.findById(id);
+		if(!optional.isPresent())
 			throw new ResourceNotFoundException(id, "Bankslip");
+		
+		Bankslip bankslip = optional.get();
+		if(bankslip.getStatus().isValid(StatusBankslip.PAID)) {
+			bankslip.setStatus(StatusBankslip.PAID);
+			bankslipRep.save(bankslip);
+		}
 		
 		bankslip.setId(id);
 		bankslipRep.save(bankslip);
