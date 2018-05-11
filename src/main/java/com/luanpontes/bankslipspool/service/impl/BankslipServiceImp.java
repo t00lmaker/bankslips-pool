@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.luanpontes.bankslipspool.calc.AfterTenDaysFineCalc;
 import com.luanpontes.bankslipspool.calc.FineCalc;
 import com.luanpontes.bankslipspool.calc.TenDaysFineCalc;
 import com.luanpontes.bankslipspool.model.Bankslip;
 import com.luanpontes.bankslipspool.service.BankslipService;
 
+@Service
 public class BankslipServiceImp implements BankslipService {
 
 	@Override

@@ -13,9 +13,12 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
+@JsonInclude(Include.NON_NULL)
 public class Bankslip implements Serializable{
 	
 	private static final long serialVersionUID = 5686025464282714459L;

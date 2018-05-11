@@ -1,12 +1,18 @@
 package com.luanpontes.bankslipspool.resource;
 
+import static com.luanpontes.bankslipspool.model.StatusBankslip.CANCELED;
+import static com.luanpontes.bankslipspool.model.StatusBankslip.PAID;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.http.HttpStatus.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +24,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.luanpontes.bankslipspool.exception.ResourceNotFoundException;
 import com.luanpontes.bankslipspool.model.Bankslip;
-import com.luanpontes.bankslipspool.model.StatusBankslip;
 import com.luanpontes.bankslipspool.repository.BankslipsRepository;
+import com.luanpontes.bankslipspool.service.BankslipService;
+import com.luanpontes.bankslipspool.service.BankslipStatusService;
 
 @RestController
 public class BankslipsResouce {
+	
+	@Autowired
+	BankslipStatusService banklipStatusService;
+	
+	@Autowired
+	BankslipService banklipService;
 	
 	@Autowired
 	BankslipsRepository bankslipRep;
@@ -44,8 +57,11 @@ public class BankslipsResouce {
 		Optional<Bankslip> bankslipOp = bankslipRep.findById(id);
 		if(!bankslipOp.isPresent())
 			throw new ResourceNotFoundException(id, "Bankslip");
-		
-		return new ResponseEntity<Bankslip>(bankslipOp.get(), OK);
+			
+		Bankslip bankslip = bankslipOp.get();
+		Integer valueFine = banklipService.calcFine(bankslip, LocalDate.now());
+		bankslip.setFine(valueFine);
+		return new ResponseEntity<Bankslip>(bankslip, OK);
 	}
 
 	@DeleteMapping("/bankslips/{id}/cancel")
@@ -55,8 +71,8 @@ public class BankslipsResouce {
 			throw new ResourceNotFoundException(id, "Bankslip");
 		
 		Bankslip bankslip = optional.get();
-		if(bankslip.getStatus().isValid(StatusBankslip.CANCELED)) {
-			bankslip.setStatus(StatusBankslip.CANCELED);
+		if(banklipStatusService.isValidChangeStatus(bankslip, CANCELED)) {
+			banklipStatusService.changeStatus(bankslip, CANCELED);
 			bankslipRep.save(bankslip);
 		}
 		
@@ -70,8 +86,8 @@ public class BankslipsResouce {
 			throw new ResourceNotFoundException(id, "Bankslip");
 		
 		Bankslip bankslip = optional.get();
-		if(bankslip.getStatus().isValid(StatusBankslip.PAID)) {
-			bankslip.setStatus(StatusBankslip.PAID);
+		if(banklipStatusService.isValidChangeStatus(bankslip, PAID)) {
+			banklipStatusService.changeStatus(bankslip, PAID);
 			bankslipRep.save(bankslip);
 		}
 		
