@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luanpontes.bankslipspool.exception.ChanceStatusNotValidException;
 import com.luanpontes.bankslipspool.exception.ResourceNotFoundException;
 import com.luanpontes.bankslipspool.model.Bankslip;
 import com.luanpontes.bankslipspool.repository.BankslipsRepository;
@@ -65,34 +67,34 @@ public class BankslipsResouce {
 	}
 
 	@DeleteMapping("/bankslips/{id}/cancel")
-	public ResponseEntity<Bankslip> delete(@PathVariable Long id) {
+	public ResponseEntity<Bankslip> cancel(@PathVariable Long id) {
 		Optional<Bankslip> optional = bankslipRep.findById(id);
 		if(!optional.isPresent())
 			throw new ResourceNotFoundException(id, "Bankslip");
 		
 		Bankslip bankslip = optional.get();
-		if(banklipStatusService.isValidChangeStatus(bankslip, CANCELED)) {
-			banklipStatusService.changeStatus(bankslip, CANCELED);
-			bankslipRep.save(bankslip);
-		}
-		
+		banklipStatusService.changeStatus(bankslip, CANCELED);
+		bankslipRep.save(bankslip);
 		return new ResponseEntity<>(NO_CONTENT);
 	}
 
 	@PutMapping("/bankslips/{id}/pay")
-	public ResponseEntity<Bankslip> update(@PathVariable Long id) {
+	public ResponseEntity<Bankslip> pay(@PathVariable Long id) {
 		Optional<Bankslip> optional = bankslipRep.findById(id);
 		if(!optional.isPresent())
 			throw new ResourceNotFoundException(id, "Bankslip");
 		
 		Bankslip bankslip = optional.get();
-		if(banklipStatusService.isValidChangeStatus(bankslip, PAID)) {
-			banklipStatusService.changeStatus(bankslip, PAID);
-			bankslipRep.save(bankslip);
-		}
+		banklipStatusService.changeStatus(bankslip, PAID);
+		bankslipRep.save(bankslip);
 		
 		bankslip.setId(id);
 		bankslipRep.save(bankslip);
 		return new ResponseEntity<>(NO_CONTENT);
 	}
+	
+	@ExceptionHandler({ ChanceStatusNotValidException.class})
+    public String handleException(ChanceStatusNotValidException e) {
+		return e.getMessage();
+    }
 }

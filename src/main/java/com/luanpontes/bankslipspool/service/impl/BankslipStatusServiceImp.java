@@ -20,7 +20,7 @@ public class BankslipStatusServiceImp implements BankslipStatusService {
 		if(isValidChangeStatus(banksplip, status))
 			banksplip.setStatus(status);
 		else
-			throw new ChanceStatusNotValidException(banksplip.getStatus()+" to "+status);
+			throw new ChanceStatusNotValidException("Not allowed to change "+banksplip.getStatus()+" to "+status);
 		
 		return banksplip;
 	}
