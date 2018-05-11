@@ -6,7 +6,7 @@ import java.util.List;
 public enum StatusBankslip {
 	
 	CANCELED,
-	PAID(CANCELED),
+	PAID,
 	PENDING(PAID, CANCELED) 
 	;
 	
@@ -24,8 +24,5 @@ public enum StatusBankslip {
 		this.statusPermited = statusPermited;
 	}
 	
-	public boolean isValid(StatusBankslip status) {
-		return this.statusPermited.contains(status);
-	}
 
 }

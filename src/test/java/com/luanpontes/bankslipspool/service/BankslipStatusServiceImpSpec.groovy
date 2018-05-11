@@ -10,7 +10,7 @@ import spock.lang.Specification
 
 class BankslipStatusServiceImpSpec extends Specification {
 	
-	BankslipStatusServiceImp bankslipStatusServiceImp
+	BankslipStatusServiceImp bankslipStatusServiceImp = new BankslipStatusServiceImp()
 	
 	def "Mudar status, PENDING >> PAID, mudanca permitida." (){
 		expect:
@@ -22,9 +22,9 @@ class BankslipStatusServiceImpSpec extends Specification {
 			bankslipStatusServiceImp.isValidChangeStatus(new Bankslip(status: PENDING), CANCELED)
 	}
 	
-	def "Mudar status, CANCELED >> PENDING, mudanca permitida." (){
+	def "Mudar status, CANCELED >> PENDING, mudanca NãO permitida." (){
 		expect:
-			bankslipStatusServiceImp.isValidChangeStatus(new Bankslip(status: CANCELED), PENDING)
+			!bankslipStatusServiceImp.isValidChangeStatus(new Bankslip(status: CANCELED), PENDING)
 	}
 	
 	def "Mudar status, CANCELED >> PAID mudanca NãO permitida." (){

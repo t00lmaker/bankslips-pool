@@ -1,6 +1,7 @@
 package com.luanpontes.bankslipspool.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -22,9 +24,10 @@ public class Bankslip implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonProperty("due_date")
 	@NotNull
-	private String dueDate;
+	@JsonProperty("due_date")
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate dueDate;
 	
 	@NotNull
 	@JsonProperty("total_in_cents")
@@ -40,11 +43,11 @@ public class Bankslip implements Serializable{
 	@Transient
 	private Integer fine;
 
-	public String getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(String dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
