@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luanpontes.bankslipspool.model.Login;
+import com.luanpontes.bankslipspool.service.RequestInfoService;
+import com.luanpontes.bankslipspool.service.TokenService;
+
 @RestController
 @RequestMapping
 public class LoginController {
@@ -23,15 +27,16 @@ public class LoginController {
 	@Autowired
 	RequestInfoService requestInfoService;
 	
+	
 	private final int USER_HASH = 3599307;
 	private final int PASSWORD_HASH = 322136988;
 
 	/* "passUser99" e "user" */
-	@PostMapping("/login")
-	public  ResponseEntity<String> login(@RequestBody String login, @RequestBody  String password, HttpServletRequest request) {
-		if(login == null || password == null)
+	@PostMapping("login")
+	public  ResponseEntity<String> login(@RequestBody Login login, HttpServletRequest request) {
+		if(!login.isComplete())
 			return new ResponseEntity<String>("Params login and password are required", HttpStatus.BAD_REQUEST);
-		else if(USER_HASH == login.hashCode() && PASSWORD_HASH == password.hashCode()) {
+		else if(login.checkHashs(USER_HASH, PASSWORD_HASH)) {
 			Map<ClaimsToken, String> claims = new HashMap<>();
 			claims.put(ClaimsToken.SUBJECT, "Login Controller");
 			claims.put(ClaimsToken.AUDIENCE, requestInfoService.getIp(request));

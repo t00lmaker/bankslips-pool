@@ -1,4 +1,4 @@
-package com.luanpontes.bankslipspool.auth;
+package com.luanpontes.bankslipspool.service.impl;
 
 import static com.luanpontes.bankslipspool.auth.ClaimsToken.AUDIENCE;
 import static com.luanpontes.bankslipspool.auth.ClaimsToken.EXPIRES_AT;
@@ -17,6 +17,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Verification;
+import com.luanpontes.bankslipspool.auth.ClaimsToken;
+import com.luanpontes.bankslipspool.service.TokenService;
 
 /**
  * Geração de tokens de autenticação utilizando 
@@ -43,7 +45,7 @@ public class JwtTokenService implements TokenService {
 
 	@Override
 	public String keySalt() {
-		return "SeradfadsrDXCVFddfdg";
+		return "Sera1a453ds2rDXCVFddfdg";
 	}
 
 	@Override

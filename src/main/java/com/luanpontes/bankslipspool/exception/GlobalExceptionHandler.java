@@ -15,11 +15,18 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Component
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
+	@ExceptionHandler
+	@ResponseBody
+	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+	public String handleGenericErro(Exception ex) {
+	  return "Internal api problem";
+	}
 
 	@ExceptionHandler
 	@ResponseBody
 	@ResponseStatus(value=HttpStatus.UNPROCESSABLE_ENTITY)
-	public String handle(MethodArgumentNotValidException exception) {
+	public String handleArgumentError(MethodArgumentNotValidException exception) {
 		String paramName = exception.getParameter().getParameterName();
 		String message = "Invalid "+paramName+" provided. The possible reasons are: ";
 		String errors = exception.getBindingResult().getFieldErrors()
@@ -29,8 +36,6 @@ public class GlobalExceptionHandler {
 
 		return  message+errors;
 	}
-
-
 
 	@ExceptionHandler
 	@ResponseBody

@@ -1,4 +1,4 @@
-package com.luanpontes.bankslipspool.auth;
+package com.luanpontes.bankslipspool.service;
 
 import javax.servlet.http.HttpServletRequest;
 

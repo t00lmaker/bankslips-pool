@@ -1,8 +1,10 @@
-package com.luanpontes.bankslipspool.auth;
+package com.luanpontes.bankslipspool.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+
+import com.luanpontes.bankslipspool.service.RequestInfoService;
 
 @Service
 public class RequestInfoServiceImpl implements RequestInfoService {

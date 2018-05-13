@@ -1,6 +1,8 @@
-package com.luanpontes.bankslipspool.auth;
+package com.luanpontes.bankslipspool.service;
 
 import java.util.Map;
+
+import com.luanpontes.bankslipspool.auth.ClaimsToken;
 
 /**
  * Servico para geração de Token para altenticação da aplicação.
