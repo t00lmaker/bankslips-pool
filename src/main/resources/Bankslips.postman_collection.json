@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "77a3381c-10d1-42f1-ba44-daa8a9b13f42",
+		"name": "Bankslips",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"username\":\"user\",\n\"password\":\"passUser99\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"login"
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Boleto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOjA6MDowOjA6MDowOjEiLCJzdWIiOiJMb2dpbiBDb250cm9sbGVyIiwiaXNzIjoiQ2xpZW50ZSB1bmljbyIsImV4cCI6MTUyNjI2NDk3MH0.d-k3katt-2Uv-C5_cF_GOck0KjMA6CfPbH-up_WYfyU"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"due_date\":\"2018-03-01\",\n\"total_in_cents\":\"100000\",\n\"customer\":\"Trillian Company\",\n\"status\":\"PENDING\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/bankslips",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"bankslips"
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de boletos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOjA6MDowOjA6MDowOjEiLCJzdWIiOiJMb2dpbiBDb250cm9sbGVyIiwiaXNzIjoiQ2xpZW50ZSB1bmljbyIsImV4cCI6MTUyNjI2NDk3MH0.d-k3katt-2Uv-C5_cF_GOck0KjMA6CfPbH-up_WYfyU"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"due_date\":\"2018-02-01\",\n\"total_in_cents\":\"20000\",\n\"customer\":\"Company A\",\n\"status\":\"PENDING\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/bankslips/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"bankslips",
+						""
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver detalhes de um boleto",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOjA6MDowOjA6MDowOjEiLCJzdWIiOiJMb2dpbiBDb250cm9sbGVyIiwiaXNzIjoiQ2xpZW50ZSB1bmljbyIsImV4cCI6MTUyNjI2Mjg0NX0.uP2JYeP9jAXDfqboqd3T7AMteJK_immVF3zzyWYAnME"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"due_date\":\"2018-02-01\",\n\"total_in_cents\":\"20000\",\n\"customer\":\"Company A\",\n\"status\":\"PENDING\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/bankslips/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"bankslips",
+						"1"
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar um boleto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOjA6MDowOjA6MDowOjEiLCJzdWIiOiJMb2dpbiBDb250cm9sbGVyIiwiaXNzIjoiQ2xpZW50ZSB1bmljbyIsImV4cCI6MTUyNjI2NDk3MH0.d-k3katt-2Uv-C5_cF_GOck0KjMA6CfPbH-up_WYfyU"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/bankslips/2/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"bankslips",
+						"2",
+						"cancel"
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		},
+		{
+			"name": "Pagar boleto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOjA6MDowOjA6MDowOjEiLCJzdWIiOiJMb2dpbiBDb250cm9sbGVyIiwiaXNzIjoiQ2xpZW50ZSB1bmljbyIsImV4cCI6MTUyNjI2NDk3MH0.d-k3katt-2Uv-C5_cF_GOck0KjMA6CfPbH-up_WYfyU"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/bankslips/1/pay",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"bankslips",
+						"1",
+						"pay"
+					]
+				},
+				"description": "Cria boleto"
+			},
+			"response": []
+		}
+	]
+}

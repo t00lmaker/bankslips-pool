@@ -31,7 +31,7 @@ public class LoginController {
 	private final int USER_HASH = 3599307;
 	private final int PASSWORD_HASH = 322136988;
 
-	/* "passUser99" e "user" */
+	/* Use no Login: "passUser99" e "user" */
 	@PostMapping("login")
 	public  ResponseEntity<String> login(@RequestBody Login login, HttpServletRequest request) {
 		if(!login.isComplete())

@@ -5,6 +5,14 @@ import java.time.temporal.ChronoUnit;
 
 import com.luanpontes.bankslipspool.model.Bankslip;
 
+/**
+ * Encapsula a regra geral para calculo de 
+ * multas, fazendo uso das especificidades de 
+ * cada regra por meio de seus metodos abstratos. 
+ * 
+ * @author Luan Pontes
+ *
+ */
 public abstract class FineCalc {
 	
 	protected Long diffDaysDueDate(Bankslip bankslip, LocalDate payDate) {

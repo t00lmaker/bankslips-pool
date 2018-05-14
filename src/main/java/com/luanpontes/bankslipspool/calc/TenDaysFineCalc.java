@@ -4,6 +4,16 @@ import java.time.LocalDate;
 
 import com.luanpontes.bankslipspool.model.Bankslip;
 
+
+/**
+ * Responsavel por guardar as regras 
+ * para a aplicação de multas com atraso de 
+ * até 10 dias.
+ * 
+ * 
+ * @author Luan Pontes
+ *
+ */
 public class TenDaysFineCalc extends FineCalc {
 
 	@Override

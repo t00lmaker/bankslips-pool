@@ -1,5 +1,11 @@
 package com.luanpontes.bankslipspool.model;
 
+/**
+ * Define o modelo ulizado no login da aplicação. 
+ * 
+ * @author toolmaker
+ *
+ */
 public class Login {
 	
 	private String username;

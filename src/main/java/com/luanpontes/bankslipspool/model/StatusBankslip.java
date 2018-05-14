@@ -3,6 +3,14 @@ package com.luanpontes.bankslipspool.model;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Enum para o controle de estados do
+ * attributo status de Bankslip.
+ * 
+ * 
+ * @author Luan Pontes
+ *
+ */
 public enum StatusBankslip {
 	
 	CANCELED,

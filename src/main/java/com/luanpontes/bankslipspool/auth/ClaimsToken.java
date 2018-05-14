@@ -9,9 +9,16 @@ package com.luanpontes.bankslipspool.auth;
  */
 public enum ClaimsToken {
 	
-	ISSUER, 
+	/* Espeficica o emissor do token.*/
+	ISSUER,  
+	
+	/* Para quem  o token foi gerado. */
 	AUDIENCE,
+	
+	/* Quando o token expira. */
 	EXPIRES_AT, 
+
+	/* Objetivo especifico do token, caso tenha.*/
 	SUBJECT;
 
 }
